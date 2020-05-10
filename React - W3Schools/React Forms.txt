@@ -1,0 +1,407 @@
+React Forms:
+
+HTML has an element type called a Form. Within it you can insert text and text boxes for the user to interact with.
+
+React, just like HTML, allows users to interact with a web page.
+
+In the following example, we have a class component called MyForm that returns a Form element that contains a piece of text and an input box for the user to insert a piece of text themselves.
+
+class MyForm extends React.Component {
+	render() {
+	
+		return(
+
+			<form>
+				<h1>Hello User</h1>
+				<p>Enter your name:</p>
+				<input type="text" />
+			</form>
+
+		);	
+	}
+}
+
+ReactDOM.render(<MyForm />, document.getElementById('FormElm'));
+
+***************************
+
+Handling Forms:
+
+Handling Forms refers to how you handle the data when it changes value or gets submitted. In HTML, form data is usually handled by the DOM. In React, it is handled by the Components. 
+By handling the data in the components, all the data is stored in the component 'state'. You can control changes to adding event handlers in the onChange attribute.
+
+In the following example, the Component has an additional features.
+- The Component has a 'state' variable called 'username' that is defaulted to blank, ''.
+- The <input> element has an 'onChange' attribute included that calls the component's myChangeHandler() function. The state object is passed into a parameter called event and it's target.value is updated into the state's username variable.
+This is done on each insert of a letter, number etc and not on a submit.
+
+class MyForm2 extends React.Component {
+
+	constructor(props){
+
+		super(props);
+		this.state = { username: '' };
+		
+	}
+
+	myChangeHandler = (event) => {
+
+		this.setState({ username: event.target.value });	
+
+	}
+
+	render() {
+
+		return(
+
+			<form>
+
+				<h1>Hello { this.state.username }</h1>
+				<p>Enter your name:</p>
+				<input type='text' onChange={ this.myChangeHandler }>
+		
+			</form>
+
+		);
+	
+	}
+
+}
+
+ReactDOM.render(<MyForm2 />, document.getElementById('FormElm2'));
+
+
+REMEMBER:
+- You must initialise the state in the constructor method before you can use it.
+- You get access to the field value using event.target.value syntax. 
+
+
+***************************
+
+Conditional Rendering:
+
+In the previous example, the <h1> element that was updated with the user's entry was always returned to the screen regardless of if the user entered any value or not.
+The following example, builds on the previous example, but only displays the <h1> element in its entirety once the user starts typing into the input box. Otherwise it is not displayed.
+
+This is done with a conditional statement in the render() function, before the return(), where a let variable is only updated with the <h1> when the field value username starts getting values.
+This <h1> is then returned to the screen as blank or as a <h1>
+
+class myForm3 extends React.Component {
+
+	constructor(props){
+
+		super(props);
+		this.state = {username: ''};	
+	
+	}
+
+	myChangeHandler = (event) => {
+
+		this.setState({ username: event.target.value });
+	
+	}
+
+	render() {
+
+		let header = '';
+		if(this.state.username) {
+
+			header = <h1>Hello { this.state.username }</h1>;
+	
+		} else {
+	
+			header = '';
+		
+		}
+
+		return(
+
+			<form>
+				{header}
+				<p>Enter your name:</p>
+				<input type='text' onChange={this.myChangeHandler}/>
+			</form>
+
+		);
+	
+	}
+}
+
+ReactDOM.render(<MyForm3 />, document.getElementById('FormElm3'));
+
+
+
+***************************
+
+Submitting Forms:
+
+You can control the submit action of a form by adding an event handler on the 'on submit' attribute.
+In the following example we have a class component called MyForm4 that returns a form to the user. Within the form is a header, a paragraph, an input box and a submit button.
+
+class myForm4 extends React.Component {
+
+	constructor(){
+	
+		super(props);
+		this.state = { username: 'Customer' };
+
+	}
+	
+	/**	Called when user presses Submit	**/
+	mySubmitHandler = (event) => {
+
+		event.preventDefault();
+		alert("You are submitting " + this.state.username );
+	
+	}
+	/**	Note that we use event.preventDefault() to prevent the form from actually being submitted.	**/
+	
+	/**	Called when user interacts with input box	**/
+	myChangeHandler = (event) => {
+
+		this.setState({username: event.target.value});
+	
+	}
+
+	render() {
+
+		return(
+
+			<form onSubmit={this.mySubmitHandler}>
+				<h1>Hello {this.state.username}</h1>
+				<p>Enter your name:</p>
+				<input type='text' onChange={this.myChangeHandler}/>
+				<input type='submit'/>
+			</form>	
+		);	
+	}
+}
+
+ReactDOM.render(<MyForm4 />, document.getElementById('userSubmit'));
+
+***************************
+
+Multiple Input Fields:
+
+To distinguish between multiple input boxes and only have a single myChangeHandler function, we add a 'name' attribute to the input elements in the form. myChangeHandler then takes this name value and the value the user entered and uses them to set values of local variables defined as part of the MyForm5 object.
+
+class MyForm5 extends React.Component {
+	constructor(props){
+	
+		super(props);
+		this.state = {
+		
+			username: '',
+			age: null,
+		
+		};
+	}
+
+	myChangeHandler = (event) => {
+
+		let name = event.target.name;
+		let val = event.target.value;
+		this.setState({[nam]: val});
+
+	}
+
+	render(){
+
+		return(
+
+			<form>
+				<h1>Hello {this.state.username} {this.state.age}</h1>
+				<p>Enter your name:</p>
+				<input type='text' name='username' onChange={this.myChangeHandler}/>
+
+			<p>Enter your age:</p>
+			<input type='text' name='age' onChange={this.myChangeHandler}/>
+			</form>
+
+		);
+	}
+}
+
+ReactDOM.render(<MyForm5 />, document.getElementById('FormElm5'));
+
+***************************
+
+Validating Form Input:
+
+In the following example, we build on the previous one but we use the Number() function to test if the value entered is a numeric value, if not then an alert message is returned to the user.
+
+class MyForm6 extends React.Component {
+
+	constructor(props){
+		super(props);
+		this.state = {
+			username: '',
+			age:null,	
+		};
+	}
+
+	mySubmitHandler = (event) => {
+		event.preventDefault();
+		let age = this.state.age;
+		if(!Number(age)) {
+			alert("Your age must be Numeric");
+		}
+	}
+
+	myChangeHandler = (event) => {
+		let nam = event.target.name;
+		let val = event.target.value;
+		this.setState({{nam}: val});
+	}
+
+	render() {
+		return(
+			<form onSubmit={this.mySubmitHandler}>
+		
+				<h1>Hello {this.state.username} {this.state.age}</h1>
+				<p>Enter your name</p>
+				<input type='text' name='username' onChange={this.myChangeHandler} />
+
+				<p>Enter your age:</p>
+				<input type='text' name='age' onChange={this.myChangeHandler} />
+
+				<input type='submit' />
+			</form>
+		);
+	}
+}
+
+
+ReactDOM.render(<MyForm6 />, document.getElementById('FormElm6'));
+
+***************************
+
+Adding Error Messages:
+
+Error messages in alert boxes can be annoying. In this example, an error message is empty by default and displays the error when the user inputs anything valid:
+
+class MyForm7 extends React.Component {
+
+	constructor(props){
+	
+		super(props);
+		this.state = {
+			username: '',
+			age: null,
+			errormessage: ''
+		};
+	}
+
+	myChangeHandler = (event) => {
+
+		let nam = event.target.name;
+		let val = event.target.value;
+		let err = '';
+		if(nam === "age") {
+		
+			if(val !="" && !Number(val)) {
+			
+				err = <strong>Your age must be a number.</strong>
+
+			}		
+		}
+
+		this.setState({errormessage: err});
+		this.setState({[nam]: val});
+			
+	}
+
+	render() {
+
+		return(
+
+			<form>
+				<h1>Hello {this.state.username} {this.state.age}</h1>
+				<p>Enter your name: </p>
+				<input type='text' name='username' onChange={this.myChangeHandler} />
+				<p>Enter your age:</p>
+				<input type='text' name='age' onChange={this.myChangeHandler} />
+				{this.state.errormessage}
+			</form>
+
+		);
+	}
+}
+
+ReactDOM.render(<MyForm7 />, document.getElementById('FormElm7'));
+
+Note, === means strictly equal.
+In the above example, the check in myChangeHandler is only interacted with if the 'age' input box is interacted with.
+
+***************************
+
+Textarea:
+
+Textarea is a type of element in HTML and React but in React it is slightly different.
+
+In HTML, the value of the texture was the text between the start <textarea> tag and end <textarea/> tag. In React the value of a texture is placed in a value attribute in the opening tag. 
+This is demonstrated below:
+
+class MyForm8 extends React.Component {
+
+	constructor(props){
+
+		super(props);
+		this.state = {
+			description: 'The content of a text area goes in the value att.'
+		};	
+	}
+	render(){
+		return(
+			<form>
+			<textarea value={this.state.description} />
+			</form>
+		);	
+	}
+}
+
+
+ReactDOM.render(<MyForm8 />, document.getElementById('FormElm8'));
+
+***************************
+
+Select:
+
+This refers to a dropdown list. In React, a dropdown list, aka a <select> element differs from its HTML counterpart.
+
+HTML:
+Here, the selected value in the dropdown list is defined with the selected attribute.
+
+<select>
+	<option value="Ford">Ford</option>
+	<option value="Volvo" selected>Volvo</option>
+	<option value="Fiat">Fiat</option>
+</select>
+
+In React, the selected value is defined with a value attribute in the select tag.
+
+class MyForm9 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			mycar: 'Volvo'
+		};
+	}
+
+	render() {
+		return(
+			<form>
+				<select value = {this.state.mycar}>
+					<option value="Ford">Ford</option>
+					<option value="Volvo">Volvo</option>
+					<option value="Fiat">Fiat</option>
+				</select>
+			</form>
+		);
+	}
+}
+
+ReactDOM.render(<MyForm9 />, document.getElementById('FormElm9'));
+
+***************************
+

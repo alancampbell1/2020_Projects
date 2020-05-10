@@ -1,0 +1,17 @@
+How to create a React Application from scratch:
+
+Make sure NPM and Node.js are installed and the latest versions are update to date.
+
+Navigate to where you want to save the Application.
+
+Run the command:
+npx create-react-app- myfirstreact
+
+'myfirstreact' is the name of the application.
+
+'create-react-app' will set up everything you need to run a React application.
+
+To run the new application you must navigate into the app and run the following command:
+npm start
+
+This will open a new browser window using localhost and port 3000.

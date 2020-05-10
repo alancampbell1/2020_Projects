@@ -1,0 +1,36 @@
+React is a JavaScript library for building user interfaces.
+Developers use it to build single page applications.
+It is useful in creating reusable UI Components.
+
+In order to create a React App, you need to set up a React Environment on your PC. 
+The most common method to doing this is to use create-react-app. This is officially supported by React and can be install when NPM and Node.js are installed on your PC.
+
+To create a React App, navigate to the location where you want to the app and run the command:
+npx create-react-app- myfirstreact
+
+myfirstreact is the name of the application.
+
+'create-react-app' will set up everything you need to run a React application.
+
+To run the new application you must navigate into the app and run the following command:
+npm start
+
+This will open a new browser window using localhost and port 3000.
+
+It is important you know some new JavaScript features such as ES6 when learning React.
+
+How does React work:
+React creates a Virtual DOM in memory. DOM stands for Document Object Model and is a programming interface for HTML and XML documents. It contains all the HTML markup we are used to.
+
+Instead of manipulating the browser's DOM directly, such with standard HTML and JS, React creates a virtual DOM in memory where all necessary manipulating is carried out before making the changes in the browser DOM.
+
+One of the major advantages of React is that it only changes what needs to be changed.
+It finds out what changes have been made and changes only what needs to be changed.
+
+
+
+
+
+
+
+

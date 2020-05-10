@@ -1,0 +1,184 @@
+React ES6:
+
+ES6 stands for ECMAScript 6.
+
+ECMAScript was created to standardise JavaScript and ES6 is the 6th version, published in 2015.
+
+React uses ES6 and in particular the features:
+Classes
+Arrow Functions
+Variables (let, const, var)
+
+************************************
+
+Classes:
+ES6 introduced Classes in JavaScript.
+A class is a type of function but we use the keyword class instead of function and the properties are assigned inside a constructor() method.
+
+      class Car {
+        constructor(name) {
+          this.brand = name;
+        }
+      }
+
+      mycar = new Car ("Ford");
+
+      document.write(mycar.brand);
+
+
+The above is an example of an ES6 Class. In React, this can be embedded into the index.html file between <script> tags
+The constructor reads in a parameter and assigns it to a local variable called brand. Notice how their is no need to declare it.
+A car object is then created that passes the value 'Ford'.
+A simple document.write is used to print the value assigned to this object's brand variable, i.e. Ford.
+
+You can also include methods that execute specific commands when called using the object:
+
+      class Car {
+        constructor(name) {
+          this.brand = name;
+        }
+
+        present(){
+          return ' I have a ' + this.brand;
+        }
+      }
+
+      mycar = new Car ("Ford");
+
+      document.write(mycar.brand);
+      document.write(mycar.present());
+
+
+
+
+
+Classes can extend other classes, similar to Java, to inherit key features.
+
+
+      class Model extends Car {
+        constructor(name, mod) {
+          super(name);
+          this.model = mod;
+        }  
+        show(){
+          return this.present() + ', it is a ' + this.model
+        }
+      }
+
+      newCar = new Model('Ford', 'Mustang');
+      document.write(newCar.show());
+
+
+*************************************
+
+Arrow Functions:
+
+Arrow functions were introduced in ES6 to allow us to write shorter functions syntax.
+
+Before Arrow Functions:
+
+hello = function() {
+	return "Hello World!";
+} 
+
+With Arrow Functions:
+hello = () => {
+	return 'Hello World!';
+}
+
+If the function has only one statement and it returns a value, then you can remove the brackets and return keyword:
+
+Hello => () => 'Hello Again!';
+
+You can pass parameters to the function within the () brackets like so:
+
+helloName = (name) => {
+	return "Hello " + name;
+}
+
+The basic way to call functions in html and print the return is using the following:
+document.getElementById('demo1').innerHTML = hello2();
+
+With sending parameters:
+document.getElementById('demo1').innerHTML = helloName('Alan');
+
+Functions can also be defined within objects and act exactly like methods.
+
+*****************************
+This:
+'this' keyword in Arrow Functions compared to Regular Functions:
+
+The way 'this' is handled is different in arrow functions compared to regular functions.
+
+In regular functions, 'this' keyword represents the object that called the function. This can be the window, the document, a button etc.
+
+In Arrow functions, 'this' keyword always represents the object that defined the arrow function.
+
+So, in the following example, in the Regular function, when we use the keyword 'this' we are referring to the object that called the function, i.e. the button, window etc.
+
+However, in the Arrow function, when we use the keyword this we are referring to the object that arrow function resides in.
+
+
+class Header1 {
+  constructor() {
+    this.color = "Red";
+  }
+
+  /** this refers to the Header1 object	**/
+  changeColor = function() {
+    document.getElementById("demo").innerHTML += this;
+  }
+}
+
+myheader = new Header1();
+
+window.addEventListener("load", myheader.changeColor);
+document.getElementById("btn").addEventListener("click", myheader.changeColor);
+
+
+
+class Header {
+  constructor() {
+    this.color = "Red";
+  }
+
+  /** This refers to the object calling the method, i.e. the button, window etc.	 **/
+  changeColor = () => {
+    document.getElementById("demo").innerHTML += this;
+  }
+}
+
+myheader = new Header();
+
+window.addEventListener("load", myheader.changeColor);
+document.getElementById("btn").addEventListener("click", myheader.changeColor);
+
+
+*****************************
+
+Variables:
+
+In ES6 there are 3 ways to define variables: var, let, const. There are important differences:
+
+
+Var:
+- outside of a function belongs to the global scope.
+- inside of a function, belongs to that function.
+- Inside a block, e.g. for loop, is still available outside of that block.
+
+Let:
+- Has block scope. It is limited to the block where it is defined, such as in a for loop, conditional etc.
+
+Const:
+- a variable that once defined cannot be changed. It also has block scope.
+
+
+
+
+
+
+
+
+
+
+

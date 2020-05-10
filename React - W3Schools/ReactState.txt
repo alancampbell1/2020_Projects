@@ -1,0 +1,93 @@
+React State:
+React components have an inbuilt state object.
+
+This object is where you store values that belong to the component.
+
+When the state object changes so does the component.
+
+**************************
+
+Creating the state object:
+
+The state object is initialised in the constructor of a Component. It can contain as many properties as you like.
+
+*Remember, when creating constructors in Components to pass any props to the super() constructor in React.Component.
+
+class WorkCar extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			brand: "Ford",,
+			model: "Mustang",
+			color: "black",
+			year:  1985
+		};
+	}
+ 
+
+	render() {
+		return(
+			<div>
+				<h1>My Work Car</h1>
+                 			<p>
+                    			It is a {this.state.color}
+                    			{this.state.brand} {this.state.model}
+                    			from {this.state.year}.
+                 			</p>
+			</div>
+		);
+	}
+}
+
+
+**************************
+
+Changing the state object:
+
+To change the value in a state object, you use the this.setState() method. When a value in a state object changes, the component re-renders which means the output we see will change according to the new value.
+
+For example, a button click changes the state value of colour property belonging to that state. Instead of the entire screen reloading, just the component changes/re-renders:
+
+class MyBike extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			brand: "Triumph",
+			model: "T-Series",
+			color: "red",
+			year: 2020
+		};
+	}
+
+	changeColor = () => {
+		this.setState({color: "blue"});
+	}
+
+	render() {
+		return(
+			<div>
+				<h1>This is my { this.state.brand } bike</h1>
+				<p>
+					It is a { this.state.color }
+					{ this.state.model }
+					from { this.state.year }.
+				</p>
+				<button type="button" onClick={this.changeColor}>Change Colour</button>
+			</div>
+		);
+	}
+} 
+
+ReactDOM.render(<MyBike />, document.getElementById('MyNewBike'));
+
+We have declared a new function, of type Arrow Function, that calls setState on this, I.e. the state object of this component, to change the property value of color from red to blue.
+The call is made from a button click that is returned to the user from the render() function that displays these settings within a div element in index.html called 'MyNewBike'.
+
+
+**************************
+
+
+Always use setState() method to change the state object, it will ensure that the component knows its been updated and calls the render() method.
+
+
+

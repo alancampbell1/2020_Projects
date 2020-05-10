@@ -1,0 +1,87 @@
+NodeJS HTTP Module:
+
+NodeJS has a built in module called HTTP. This allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP).
+
+HTTP is a protocol which allows the fetching of resources, such as HTML documents. It is the foundation of any data exchange on the Web and is a client-server protocol.
+
+To include the HTTP Module, you need the require() method as follows:
+
+var http = require('http');
+
+NodeJS as a Web Server:
+
+The HTTP module can create a HTTP server that listens to server ports and gives a response back to the client.
+
+To create the physical server, we use the createServer() method as follows:
+
+var http = require('http');	//Including the HTTP Module
+
+//creating the server object
+http.createServer(function (req, res) {
+	res.write('Hello World');	//writing a response to the client
+	res.end();			//end the response
+}).listen(8080);			//the server object listens on port 8080
+
+
+
+The function passed into the http.createServer() method, will be executed when someone tries to access the computer on port 8080.
+
+***********************
+
+Add a HTTP Header:
+
+Its good practice to include a HTTP Header with the correct content type outlined, especially if the response is supposed to be displayed as HTML.
+
+var http = require('http');
+
+http.createServer(function (req, res) {
+
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.write('Hello World');
+	res.end();
+}).listen(8080);
+
+In res.writeHead(), the first argument is the status code with 200 meaning OK. The second argument is an object contains the response headers.
+
+
+***********************
+
+Read the Query String:
+
+There is a 'req' argument that is passed into http.createServer() and it represents a request from the client, as an object (http.IncomingMessage object).
+
+For example, it has a property called 'url', which holds the part of the URL that comes after the domain name. If we print 'req.url' and go to the URL 'localhost:8080/summer', the word 'summer' will be printed to the screen:
+
+var http = require('http');
+http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/html'});
+  	res.write(req.url);
+  	res.end();
+}).listen(8080);
+
+
+***********************
+
+Split the Query String:
+
+There are built-in modules to easily split the query string into readable parts, such as the URL Module. 
+
+In the following example we store the url object in a variable called url. In our createServer() method, we parse the req.url (i.e. the extension after 8080) into a local variable called q. 'q' then looks for the keyword 'year' and the keyword 'month' and prints their values.  
+
+var http = require('http');
+var url = require('url');
+
+http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	var q = url.parse(req.url, true).query;
+	var txt = q.year + " " + q.month;
+  	res.end(txt);
+}).listen(8080);
+
+
+
+If we go the URL 'http://localhost:8080/?year=2020&month=July', 2020 and July are printed to the screen. 
+
+This will be covered in more detail later.
+
+

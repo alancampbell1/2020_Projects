@@ -1,0 +1,87 @@
+NodeJS URL Module:
+
+The Built-in URL Module:
+
+The URL Module splits up a web address into readable parts. To include the URL module, use the require() method:
+
+var url = require('url');
+
+You can then use the .parse() to return a URL object with each part of the address as properties.
+
+Example:
+
+var url = require('url');
+var adr = 'http://localhost:8080/default.htm?year=2020&month=may';
+var q = url.parse(adr, true);
+
+console.log(q.host);		// returns 'localhost:8080'
+console.log(q.pathname);	// returns '/default.html'
+console.log(q.search);		// returns '?year=2020&month=may'
+
+var qData = q.query;		// returns an object {year: 2020, month: may}
+console.log(qData.month); 	// returns 'may'
+
+***************************
+
+Node.js File Server:
+
+
+Now that we know how to parse a query string and make Node.js behave as a file server, this example will combine the two and serve the file requested by the client. 
+
+Two HTML files will be created, one printing 'Summer' and the other printing 'Winter'.
+
+Summer.html:
+
+<!DOCTYPE html>
+<html>
+<body>
+	<h1>Summer</h1>
+	<p>Love the sun</p>
+</body>
+</html>
+
+Winter.html:
+
+<!DOCTYPE html>
+<html>
+<body>
+	<h1>Winter</h1>
+	<p>Love the snow</p>
+</body>
+</html>
+
+
+The following node.js file parses the URL into a variable called q. It takes the pathname and assigns it to another local variable called 'filename'.
+It then reads the file and if it exists, prints its content or else throws an error.
+
+
+var http = require('http');	//get the HTTP module
+var url  = require('url');	//get the URL Module
+var fs   = require('fs');	//get the File System Module
+
+
+//Creating the Server
+http.createServer (function (req, res){
+
+	var q = url.parse(req.url, true);	//Gets the URL
+	var filename = "." + q.pathname; 	//Gets the file path 
+
+	fs.readFile(filename, function(err, data){
+		if(err){
+			res.writeHead(404, {'Content-Type': 'text/html'});
+			return res.end("404 Not Found");
+		}
+
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		res.write(data);
+		return res.end();
+	});
+}).listen(8080);
+
+
+By going to http://localhost:8080/winter.html and http://localhost:8080/winter.html , you will get two different outputs.
+
+
+
+
+

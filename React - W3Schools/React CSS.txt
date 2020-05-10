@@ -1,0 +1,165 @@
+React CSS:
+
+Inline Styling:
+
+To style an element with the inline style attribute, the value must be a JavaScript object. The following example shows how to insert an object that contains styling information into a <h1> element.
+
+class MyStyle extends React.Component {
+	render() {
+		return(
+			<div>
+				<h1 style={{color: "red"}}>Hello Style</h1>
+				<p>Adding style!!!</p>
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<MyStyle />, document.getElementById('styleElm'));
+
+NOTE: When using JSX, JS expressions are written inside curly braces and since JS objects also use curly braces, the styling in the above example is written inside two sets of curly braces {{}}.
+
+**************************************
+
+camelCased Property Names:
+
+Since the inline CSS is written in a JS object, properties with two names, like 'background-color' must be written with camel case syntax:
+
+class MyStyle2 extends React.Component {
+	render() {
+		return(
+			<div>
+				<h1 style={{backgroundColor: "lightblue"}}>Hello new Style</h1>
+				<p>Adding more style</p>
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<MyStyle2 />, document.getElementById('styleElm2'));
+
+**************************************
+
+JavaScript Object:
+
+You can also create an object with styling information and refer to it in the style attribute:
+
+class MyStyle3 extends React.Component {
+	render(){
+		const myPersonalStyle = {
+			color: "white",
+			backgroundColor: "DodgerBlue",
+			padding: "10px",
+			fontFamily: "Arial"
+		};
+		return(
+			<div>
+				<h1 style={myPersonalStyle}>Hello another style</h1>
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<MyStyle3 />, document.getElementById('styleElm3'));
+
+**************************************
+
+CSS Stylesheet:
+
+You can write CSS styling into a separate file with the extension .css and then import it into your application. This .css file will go into the src folder. The following example demonstrates the CSS file and the index.js file that is linked to the CSS file.
+
+userStyle4.js:
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './myApp.css';
+
+class MyStyle4 extends React.Component {
+
+	render(){
+	
+		return(
+			
+			<div>
+				<h1>Hello Style</h1>
+				<p>Adding some style.</p>
+			</div>
+
+		);
+	}
+} 
+
+export default MyStyle4; 
+
+
+myApp.css:
+
+body {
+	background-color: #00FF00;
+	color: white;
+	font-family: Arial;
+	text-align: center;
+
+}
+
+index.js:
+
+import MyStyle4 from './UserStyle4';
+
+...
+
+ReactDOM.render(<MyStyle4 />, document.getElementById('styleElm4'));
+
+**************************************
+
+CSS Modules:
+
+Another way of adding styles to an application is to use CSS Modules. These are convenient for components that are placed in separate files.
+
+The CSS inside a module is only available for the component that imported it. So you don't have to worry about name conflicts.
+
+In the following example we have a module.css file called myMStyle.module.css. It is then imported into a component file called UserStyle5.js. This component is then imported into the index.js file from which is linked to the frontend index.html file.
+
+myMStyle.module.css:
+
+.bigBlue {
+	color: DodgeBlue;
+	padding: 40px;
+	font-family: Arial;
+	text-align: center;
+}
+
+UserStyle5.js:
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import styles from './myMStyle.module.css'; 
+
+class myStyle5 extends React.Component {
+
+	render() {
+
+		return <h1 className={styles.bigBlue}>Hello Car!</h1>;
+	}
+}
+
+export default myStyle5;
+
+index.js:
+
+import myStyle5 from './UserStyles5';
+
+...
+
+ReactDOM.render(<MyStyle5 />, document.getElementById('styleElm5'));
+
+index.html:
+
+<div id="styleElm5"></div>
+
+NOTE: In UserStyle.js we store the imported module.css file into local variable called 'styles'. From here, in the component we can refer directly using this object to the portions of code we are concerned with in the module.css file.
+
+
+
+**************************************
+

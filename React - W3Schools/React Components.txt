@@ -1,0 +1,171 @@
+React Components:
+
+Components are like functions that return HTML elements. They are independent and reusable bits of code. They serve the same purpose as JavaScript functions but they work in isolation and return HTML via a render function.
+
+Components come in two main formats: Class Components and Function Components.
+
+****************************
+
+Create a Class Components:
+
+When creating a react class component you must have the following: 
+- The name must start with an upper case letter. 
+- It must also extend the function React.Component.
+- There must also be a render() method that returns the HTML.
+- It can be created in the index.js file.
+
+The following example creates a Class Component called 'Car' and returns a <h2> element printing the name and model of the car:
+
+class Car extends React.Component {
+	render() {
+		return <h2>Skoda Fabia</h2>;
+	}
+} 
+
+
+We then use the name of Class Component in the syntax < /> to pass the return statement, i.e. the <h2>, as HTML code in the ReactDOM.render() function.
+
+ReactDOM.render(<Car />, document.getElementById('carDetails'));
+
+*Note the space between Car and />.
+
+
+****************************
+
+Create a Function Component:
+
+A function component acts just like a Class component but Class Components have some additions and are preferred.
+
+function NewCar() {
+	return <h2>VW Golf</h2>;
+} 
+
+Referring to the newCar() function component in ReactDOM is the exact same:
+
+ReactDOM.render(<NewCar />, document.getElementById('newCarDetails'));
+
+****************************
+
+Component Constructor:
+
+If there is a constructor() function in the component class, this constructor will be called when the component get initiated.
+
+The constructor is where you initiate the component's properties, I.e. give any local variables values.
+
+In React, a component class' properties should be kept in an object called 'state'.
+
+Also, in the constructor function, this is where you honour the inheritance of the parent component (i.e. extends React.Component) by including the super() statement at the beginning. This executes the parent component class's constructor function first.
+
+The following example shows this:
+
+class MyVan extends React.Component {
+	constructor() {
+		super();
+		this.state = {color: "red"};
+	}
+	render() {
+		return <h2>The van is a {this.state.color} colour.</h2>
+	}
+} 
+
+ReactDOM.render(<MyVan />, document.getElementById('userVan'));
+
+
+Note:
+We defined a property called 'color' with a value of 'red' within the 'state' of the component class 'MyVan'.
+
+****************************
+
+Props:
+
+Props are like function arguments and we can send then into a component as attributes.
+
+For example, we can pass a 'color' properties value into the class component through the ReactDOM.render() method when it is called on that particular component.
+
+class Skateboard extends React.Component {
+	render() {
+		return <h2>My Board is a { this.props.color } Skateboard.</h2>;
+	}
+}
+
+ReactDOM.render(<Skateboard color = "Black"/>, document.getElementById('mySkateboard'));
+
+Notice how there is no need for an initial constructor() method in this example.
+
+****************************
+
+Components in Components:
+
+Components can be called from inside other Components. In the following example we have an Engine Component that extends a Plane Component and calls it in order to print the Plane's return statement.
+
+class Plane extends React.Component {
+	render() {
+		return <h3>The airplane is ready</h3>	
+
+	}
+}
+
+class Engine extends React.Component {
+	render (){
+		return (
+			<div>
+				<h1>Engine being attached</h1>
+				<Plane />
+			</div>
+		)		
+	}
+} 
+
+ReactDOM.render(<Engine />, document.getElementById("myPlane"));
+
+
+Notice how we have multiple HTML elements in Engine's render and therefore need ().
+Also, there is no need to extend 'Plane' from 'Engine'. The fact they are in the same file is enough for them to recognise each other.
+
+
+****************************
+
+Components in Files:
+
+Remember, React is all about re-using the same code multiple times and it can be smart to separate your components into separate files.
+
+To do so, you need a new file with a .js extension and saved to the same folder as where the HTML is.
+
+Also, inside the file you need to import the following react libraries:
+Import React from 'react';
+Import ReactDOM from 'react-dom';
+
+And export the component class that wishes to be used:
+
+--File: Computer.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+class Computer extends React.Component {
+	render() {
+		return <h2>this is the computer talking</h2>
+	}
+} 
+
+export default Computer;
+
+--File: index.js
+
+We need to import our Component from the new JS file we created with the following:
+import Computer from './Computer';
+
+Now we can use our ReactDOM.render() function as below:
+
+ReactDOM.render(<Computer />, document.getElementById("myComputer"));
+
+
+--File: index.html
+
+As before we just need to create a root element to link our render() function up:
+<div id="myComputer"></div>
+
+
+
+
+

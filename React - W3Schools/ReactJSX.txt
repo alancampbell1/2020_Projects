@@ -1,0 +1,75 @@
+React JSX:
+
+JSX stands for JavaScript XML. It allows us to HTML in React. It makes it easier to write and add HTML in React.
+
+JSX allows us to write HTML elements in JavaScript and place them in the DOM without any createElement() or appendChild() methods needed.
+
+JSX converts HMTL tags into react elements.
+
+Showing the difference with examples:
+With JSX:
+The following example shows how JSX works in React, in index.js
+
+const element = <h1>I love JSX</h1>
+
+ReactDOM.render(element, document.getElementById('root')); 
+
+Without JSX:
+The following example shows what we would have to do if there was no JSX:
+
+const myelement = React.createElement('h1', {}, 'I do not use JSX!');
+
+ReactDOM.render(myelement, document.getElementById('root'));
+
+* We would have to constantly call the React function createElement(), passing everything we wanted to create. Having JSX makes life much easier.
+
+
+********************
+
+Expressions in JSX:
+
+Expressions in JSX are written inside {} braces.
+
+For example, to add two integer values together in an expression to print to the screen it would look like the following in index.js before the called to ReactDOM.render():
+
+const myExpression = <h1>React is { 5 + 5 } better with JSX.</h1> 
+
+********************
+
+Inserting a Large Block of HTML:
+
+To write multiple HTML elements in JSX and have them together within a single JS variable, put them inside parentheses ():
+
+const myFruit = (
+	<ul>
+		<li>Apples</li>
+		<li>Bananas</li>
+		<li>Oranges</li>
+	</ul>
+);
+
+
+********************
+
+One Top Level Element:
+
+When storing multiple HTML elements in a single variable in index.js, you must also wrap all elements in a single top level element. In the previous example, this was a <ul> element and in this element it is a <div> element:
+
+const myCities = (
+	<div>
+		<h1>Dublin</h1>
+		<h2>London</h2>
+	</div>
+); 
+
+*******************
+
+Elements Must be Closed:
+
+JSX follows XML rules, so therefore HTML elements must be properly enclosed with />.
+
+Example:
+
+const myElement = <input type = "text" />; 
+
+

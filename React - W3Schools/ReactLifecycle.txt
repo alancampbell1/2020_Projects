@@ -1,0 +1,296 @@
+React Lifecycle:
+
+Lifecycle of Components:
+
+Each Component in React has a lifecycle which you can monitor and manipulate during its three main phases: Mounting, Updating & Unmounting.
+
+************************
+
+Mounting:
+
+Mounting refers to putting elements into the DOM. React has four built-in methods that get called, in this order, when mounting a component:
+
+1. constructor()
+2. getDerivedStateFromProps()
+3. render()
+4. componentDidMount()
+
+When creating a Component, the render() is always required to be included, whilst the others are optional and will be called if you define them.
+
+1. Constructor:
+The constructor() method is called before anything else, when a Component has been initialised and is the natural place to set up the initial state object and other values to work with.
+
+Constructor() is called with the props, as arguments, and should always start by calling the super(props). This will initiate the parent constructor method and will allow the component to inherit all the methods from its parent component, i.e. React.Component.
+
+Example:
+
+class Header extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = { colour: "green" };
+	}
+
+	render() {
+		return(
+			<h4>My favourite colour is { this state.colour }</h4>
+		);
+	}
+}
+ReactDOM.render(<Header />, document.getElementById('favouriteColour'));
+
+2. getDerivedStateFromProps():
+This method is called just before the render() method, i.e. before rendering/displaying elements in the DOM.
+This is the natural place to set the 'state' object based on the initial props.
+This method takes state as an argument and returns an object with changes to the state.
+
+In the following example, we set a state property value of 'favouriteMusic' to 'Rock' but use the getDerivedStateFromProps() method to update this value based on what was assigned to props attribute 'favMusic'. This is assigned in the ReactDOM.render() method.
+
+class Header1 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {favouriteMusic: "rock"}
+	}
+	static getDerivedStateFromProps(props, state) {
+		return {favouriteMusic: props.favMusic};
+	}
+	render(){
+		return (
+			<h4>My favourite Music is { this.state.favouriteMusic } </h4>
+		);		
+	}
+}
+
+ReactDOM.render(<Header1 favMusic = "Rap" />, document.getElementById('myMusic'));
+
+3. render():
+
+The render() method is always required and is the method that outputs the HTML to the DOM.
+
+The following is a simple render() method example:
+
+class Header extends React.Component {
+	render() {
+		return(
+			<h1>This content comes from the render() method.</h1>
+		);
+	}
+}
+
+ReactDOM.render(<Header />, document.getElementById('root'));
+
+
+4. componentDidMount():
+
+The componentDidMount() is called after the component is rendered to the DOM.
+
+This is where you run statements/code that requires the component to be already in place in the DOM.
+
+In the following example, we set a property value of favouriteFood to Curry as part of the state object. This is done in the constructor. We then render the output to the screen. We then call componentDidMount() and change this food after 1 second.
+
+class Header2 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {favouriteFood: "Curry"};
+	}
+
+	render() {
+		return(
+			<h1>My favourite food is { this.state.favouriteFood }</h1>
+		);
+	}
+
+	componentDidMount() {
+		setTimeout(() => { this.setState({favouriteFood: "Pizza"}) }, 1000)
+	}
+}
+
+ReactDOM.render(<Header2 />, document.getElementById('myFood'));
+
+This can be important for automatic changes. Remember, the purpose of React is to update parts of the DOM that need updating and not the entire screen.
+
+************************
+
+Updating:
+
+The next phase in the lifecycle is when a component is updated. A component is updated whenever there is a change to the component's state or props.
+
+React has 5 in-built methods that get called, in this order, when a component is updated.
+Again, only render() is required and all others are optional and are called if defined.
+
+
+1. getDerviedStateFromProps():
+Already covered in 'Mounting', this method is called when a Component is updated. It is the first method that is updated. It is the natural place to set the state object based on the initial props. 
+
+In the following example, we have a Component with a Constructor that sets a local property of 'favouritecolor' to 'red' as part of the state object. 
+We then have the getDerivedStateFromProps method that changes the favouritecolor property value attached to the state to the props.favcol value being passed in from ReactDOM.render(). In this instance, we never see favouritecolor as red but only yellow.
+We also have a changeColor method, as an arrow function, that calls on setState() to change favouritecolor from yellow to blue when called. Which is due to a button click.
+However, in every instance of the update, i.e. when the button is clicked, getDerivedStateFromProps() is called so there is no change to our output.
+
+class Header3 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {favouritecolor: "red"};
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		return { favouritecolor: props.favcol };
+	}
+
+	changeColor = () => {
+		this.setState({ favouritecolor: "blue" });
+	}
+
+	render() {
+		return(
+			<div>
+				<h1>My favourite Colour is { this.state.favouritecolor }</h1>
+				<button type="button" onclick={this.changeColor}>Change Colour</button>
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<Header3 favcol = "yellow"/>, document.getElementById('colourChange'));
+
+
+2. shouldComponentUpdate():
+This method returns a boolean value that specifies if react should continue with the rendering or not. It has a default value of TRUE.
+
+In the following example, if we declare the shouldComponentUpdate() method to return FALSE then the button click to update the state property value of favouritecolor will not happen  on screen.
+
+class Header4 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = { favouriteColor: "red" };
+	}
+
+	shouldComponentUpdate() {
+		return false;
+	}
+
+	changeColor = () => {
+		this.setState({ favouriteColor: "blue" });
+	}
+
+	render() {
+		return(
+			<div>
+				<h1>My fav. Colour is { this.state.favouriteColor }</h1>
+				<button type = "button" onClick={this.changeColor}>Change Colour</button>
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<Header4 />, document.getElementById('favColor'));
+
+3. render():
+Explained before. In an update, the component gets updated and has to re-render the HTML to the DOM with the changes.
+
+4. getSnapshotBeforeUpdate():
+In this method you have access to the state and props before the update. Meaning that after an update, you can check what values were before the update.
+
+When using this method, you also need to include the componentDidUpdate() method to avoid an error. 
+
+The following example explains uses this:
+- A component is mounted where the property is assigned to the state called favColour with a value of 'green'. This is done in the constructor.
+
+- Next, render() is called which prints this colour along with two empty <div> elements
+
+- Next, componentDidMount() is called where a timer changes favColour to 'black' after 10 seconds. This initiates the update phase.
+
+- Then getSnapshotBeforeUpdate() is called, after the update, where it updates the empty div in render() with the property value of 'favColour'. However, this is the old value of 'green' and not the new value of 'black'.
+
+- componentDidUpdate() is called after getSnapshotBeforeUpdate(), to avoid an error. This prints the new value of favColour after the update, i.e. black.
+
+class Header5 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {favColour: "green"};
+	}
+
+	componentDidMount() {
+		setTimeout(() => { this.setState({favColour: "Black"})}, 10000)
+	}
+
+	getSnapshotBeforeUpdate(prevProps, prevState){
+		document.getElementById("div1").innerHTML = "Favourite was: " + prevState.favColour;
+	}
+
+	componentDidUpdate() {
+		document.getElementById("div2").innerHTML = "Favourite is: " + this.state.favColour;
+	}
+
+	render() {
+		return(
+			<div>
+				<h4>Alan's favourite Colour is {this.state.favColour}</h4>
+				<div id="div1"></div>
+				<div id="div2"></div>
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<Header5 />, document.getElementById('changingColour'));
+
+
+5. componentDidUpdate():
+This was explained in the previous example. It must be called with getSnapshotBeforeUpdate() and interacts with the current state of the state object. 
+
+
+************************
+
+Unmounting:
+
+The final phase of the React Lifecycle involves Unmounting. This is when a component is removed from the DOM, referred to as unmounting. 
+
+The main method that deals with removing Components is componentWillUnmount(). This does not take any arguments and can contain a simple print or alert message. The following example demonstrates how to delete a component from a separate component.
+
+- First, a Component called Header6 is declared. It has a state property of 'show' assigned TRUE. 
+- A delHeader() arrow function is declared that calls on 'setState()' to change this 'show' property value to FALSE.
+- Next, we have the 'render()' method, that has a local variable called 'myheader'. A conditional is carried out to see if 'show' is TRUE. If it is then the 'myHeader' is assigned to another Component called 'Child'. A <div> element is returned to the user that firstly displays what the Child component 'render()' method returns, i.e. Hello World. A button is declared below it calls on the 'delHeader()' arrow function declared earlier.
+- When pressed, 'show' is now false so when 'render()' is run again from Header6 component update, 'myheader' is not re-assigned to the Child Component so before it is lost, componentWillUnmount() is called from the old container printing an alert. But no 'Hello World' is printed and thus disppears.
+
+class header6 extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {show: true};
+	}
+
+	delHeader = () => {
+		this.setState({show:false});
+	}
+	
+	render() {
+		let myHeader;
+		if(this.state.show){
+			myHeader = <Child />;
+		};
+		return(
+			<div>
+				{myHeader}
+				<button type="button" onClick={this.delHeader}>Delete Header</button>
+			</div>
+		);
+	}
+}
+
+class Child extends React.Component {
+	componentWillUnmount() {
+		alert("The component is about to be deleted.");
+	}
+	render() {
+		return(
+			<h1>Hello World!</h1>
+		); 
+	}
+}
+
+ReactDOM.render(<Header6 />, document.getElementById('deletingContainer'));
+
+
+
+
+
+

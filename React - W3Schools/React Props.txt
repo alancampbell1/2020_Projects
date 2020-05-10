@@ -1,0 +1,118 @@
+React Props:
+
+Props are arguments that are passed into React Components.
+
+They are passed to components through HTML attributes.
+
+React Props are like function arguments in JS and attributes in HTML.
+
+To send props into a component, we use the same syntax as HTML attributes.
+
+In the following example, we send a prop called brand with a value of 'Ford' into Component OwnerCar all in the index.js file:
+
+class OwnerCar extends React.Component {
+	render() {
+		return <h4>I am a { this.props.brand } type of car.</h4>
+	}
+}
+
+//This is the Prop
+const myElement1 = <OwnerCar brand="Ford" />;
+
+ReactDOM.render(myElement1, document.getElementById('carInfo')); 
+
+****************************
+
+Pass Data:
+
+***Example 1: Send the 'brand' prop from the Garage1 component to the BrothersCar component:
+class BrothersCar extends React.Component {
+	render() {
+		return <h2>Brother has a { this.props.brand } car!</h2>
+	}
+} 
+
+class Garage1 extends React.Component {
+	render() {
+		return (
+			<div>
+				<h1>Bought from the Garage</h1>
+				<BrothersCar brand = "Ford" />
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<Garage1 />, document.getElementById('BrotherCar'));
+
+***Example 2: If you have a variable, not a String, you can put them inside { } brackets:
+
+class SistersCar extends React.Component {
+	render() {
+		return <h2>Sister has a { this.props.brand } car! </h2>
+	}	
+}
+
+class Garage2 extends React.Component {
+	render() {
+		const carname = "Ford";
+		return (
+			<div>
+				<h1>Bought from Garage2</h1>
+				//This is the prop
+				<SistersCar brand = {carname} />
+			</div>
+		);
+	}
+}
+
+ReactDOM.render(<Garage2 />, document.getElementById('SisterCar'));
+
+
+***Example 3: Or if you have an object, you put it inside { } brackets:
+
+In this instance we refer to the current instance, the prop, the object and specific variable.
+
+class DadsCar extends React.Component {
+	render() {
+		return <h4>Dad has a {this.props.brand.model} type of car.</h4>
+	}
+}
+
+class Garage3 extends React.Component {
+	render() {
+		const carInfo = {name: "Benz", model: "S-Model"};
+		
+		return (
+			<div>
+				<h1>Bought from Garage 3.</h1>
+				//This is the prop
+				<DadsCar brand = {carInfo} />
+			</div>
+		);
+	}
+} 
+
+ReactDOM.render(<Garage3 />, document.getElementById('DadCar'));
+
+****************************
+
+Props in the Constructor:
+
+If your component has a constructor function, the props should always be passed to the constructor and also to the React.Component via the super() method.
+
+class mothersCar extends React.Component {
+	constructor(props){
+		super(props);
+	}
+	return() {
+		return <h2>This is another Car.</h2>
+	}
+}
+
+ReactDOM.render(<Car model ="Mustang" />, document.getElementById('MotherCar'));
+
+****************************
+
+Important note: React Props are read-only and cannot be changed.
+

@@ -1,0 +1,190 @@
+React Events:
+
+This refers to React performing actions based on user events.
+
+React has the same events as HTML: clicks, change, mouseover etc.
+
+Adding Events:
+- React events are written in camelCase syntax, e.g. onClick.
+- React event handlers are written inside curly braces:
+onClick={}
+
+In the following example, we have a function that when called displays an alert to the user. We also have a const variable that stores the physical button and calls on the function when clicked. We also have a ReactDOM.render() method that passes button variable to the frontend element with a matching ID.
+
+index.js:
+function shoot() {
+	alert("Great Shot!");
+}
+
+const myElement = (
+	<button onClick={shoot}>Take a Shot</button>
+); 
+
+ReactDOM.render(myElement, document.getElementById('myShotButton'));
+
+index.html:
+<div id="myShotButton"></div>
+
+*********************
+
+Event Handlers:
+It is good practice to put an event handler as a method in a component class.
+
+In the following example we have a component called Football that contains a shoot() function that prints an alert to the screen when called. The render() method returns a button that when clicked calls on the function.
+Then outside the component we link the component to the div element in the frontend using the standard ReactDOM.render() method.
+
+index.js:
+
+class Football extends React.Component {
+
+	shoot(){
+	
+		alert("Great Shot!!!");
+	
+	}
+
+	render() {
+
+		return(
+	
+			<button onClick={this.shoot}>Take a Shot!!!</button>
+		
+		);	
+
+	}
+
+} 
+
+ReactDOM.render(<Football />, document.getElementById("componentButton"));
+
+
+
+*********************
+
+Bind this:
+
+When using 'this', the handling of the keyword differs between arrow functions and regular functions. 
+In regular functions, the 'this' keyword represents the object calling the function. This can be a window, button, document etc.
+In Arrow functions, the 'this' keyword represents the object that defined the arrow function.
+
+Regular Functions = represents the calling object, i.e. button, window etc.
+Arrow Functions = represents the object that defined the arrow function, i.e. the component.
+
+In the following example, we print the object associated with the class in the alert and not what is calling it, i.e. the button.
+
+class Football extends React.Component {
+
+	shoot = () => {
+
+		alert(this);		
+
+	}	
+
+	render() {
+
+		return(
+		
+			<button onClick={this.shoot}>Take another shot</button>		
+
+		);
+		
+	}
+
+}
+
+ReactDOM.render(<Football />, document.getElementById('root'));
+
+
+If you don't use Arrow Functions and want to use 'this', you must bind it to the component object, generally in the constructor. Otherwise, referring to this will return 'undefined'.
+
+NOTE: use Arrow Functions when working with 'this'. Because there is no binding of 'this'.
+
+class Football extends React.Component {
+	constructor(props) {
+
+		super(props);
+		this.shoot = this.shoot.bind(this)
+
+	}
+
+	shoot(){
+
+		/** Thanks to the binding the constructor, the 'this' keyword now refers to the component object. Otherwise it would return undefined.	**/
+
+		alert(this);
+
+	}
+
+	render() {
+
+		return(
+
+			<button onClick={this.shoot}>Take a shot!</button>
+	
+		);
+
+	}
+
+}
+
+
+*********************
+
+Passing Arguments:
+
+In the following example, a String is passed to the function 'shoot' when pressed. This is then alerted to the screen. Notice how we are using arrow functions to call and pass variables. Its different in the onClick syntax where we include () => at the start.
+
+
+class Basketball extends React.Component {
+
+	shoot = (a) => {
+
+		alert(a);		
+
+	}
+
+	render() {
+
+		return(
+			
+			<button onClick={() => this.shoot("3 points!!!")}>Throw the ball</button>		
+	
+		);
+		
+	}
+	
+}
+
+ReactDOM.render(<Basketball />, document.getElementById('basket'));
+
+
+*********************
+
+React Event Object:
+
+Event Handlers have access to the React event that triggered the function. This can be a click, mouseover, hover etc.
+
+In the following example we prove this by storing a click event in a parameter called ev that is passed to the shoot arrow function as 'b' and when we print it's type 'click' is returned to the screen.
+
+class Golf extends React.Component {
+	shoot = (a, b) => {
+	
+		alert(b.type);
+
+	}
+
+	render() {
+	
+		return(
+
+			<button onClick={(ev) => this.shoot("Shot taken", ev)}>Swing</button>	
+	
+		);
+	
+	}
+} 
+
+ReactDOM.render(<Golf />, document.getElementById('golfDiv'));
+
+
+*********************

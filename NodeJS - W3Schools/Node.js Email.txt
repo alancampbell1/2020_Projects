@@ -1,0 +1,73 @@
+Node.js Email:
+
+The node mailer module makes it easy to send emails from your computer. It can downloaded and installed using NPM:
+
+npm install nodemailer
+
+(NOTE: Make sure this is in the same location as the package.json file)
+
+After you have downloaded Nodemailer, you can include the module into your application:
+
+var nodemailer = require('nodemailer');
+
+****************************************
+
+Send an email:
+
+You need a username and password from a selected email provider to send an email. The following example uses Gmail:
+
+var nodemailer = require('nodemailer');
+
+//transporter object with our email source attached
+var transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: 'yourmail@gmail.com',
+		pass: 'yourpassword'
+	}
+});
+
+//mailOptions object containing from, to, subject & text information
+var mailOptions = {
+	from: 	 'yourmail@gmail.com',
+	to:   	 'myfriends@yahoo.ie',
+	subject: 'Sending email using Node.js',
+	text:	 'That was easy!'
+}; 
+
+//Carrying out the sendMail() function to send an email
+transporter.sendMail(mailOptions, function(error, info)){
+	if(error) {
+		console.log(error);
+	} else {
+		console.log('Email Sent: ' + info.response);
+	}
+});
+
+****************************************
+
+Multiple Receivers:
+
+To send an email to multiple receivers, add them to the 'to' properties option in mailOptions like so:
+
+var mailOptions = {
+	from: 	 'youremail@gmail.com',
+	to:   	 'myfirst@gmail.com, mysecond@gmail.com',
+	subject: 'test',
+	text:	 'That was simple.'
+}
+
+****************************************
+
+Send HTML:
+To send HTML we add it to a new property called 'html' in the mailOptions object which replaces 'text':
+
+var mailOptions = {
+	from:    'youremail@gmail.com',
+	to:	 'myfriend@yahoo.com',
+	subject: 'Sent using Node.js',
+	html:	 '<h1>Welcome</h1><p>That was straight forward.<p>'
+}
+
+****************************************
+

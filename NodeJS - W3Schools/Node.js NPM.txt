@@ -1,0 +1,54 @@
+Node.js NPM:
+
+NPM is a package manager for Node.js packages or modules.
+
+npmjs.com hosts thousands of free packages to download and use.
+
+The NPM program is installed on your PC when you install Node.js.
+
+******************************************
+
+What is a Package:
+A Package in Node.js contains all the files you need for a module.
+Modules are JS libraries you can include in your project.
+
+******************************************
+
+How to download a Package:
+
+Open the Terminal and create the package.json file by typing:
+npm init 
+
+Next, tell npm to download the package you want.
+
+For example, to download the package 'upper-case' go:
+npm install upper-case
+
+NPM will create a folder called 'node_modules' where all the packages are placed. All future packages you also install in the future will be here too.
+
+******************************************
+
+Using a Package:
+
+Once installed, it is ready to use. For example, the upper-case package can be included like any other module:
+
+In the following example, we use the new package to convert an output to all uppercase letters:
+
+var http = require('http');
+var uc   = require('upper-case');
+
+http.createServer(function(req, res){
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	/**	Using our new package to converts	**/
+	res.write(uc.upperCase("Hello World"));
+	res.end();
+}).listen(8080);
+
+
+
+
+
+
+
+
+

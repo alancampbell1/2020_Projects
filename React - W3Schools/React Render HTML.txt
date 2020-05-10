@@ -1,0 +1,90 @@
+React Render HTML:
+
+What does Rendering mean:
+When you open a webpage, the server sends you some data, such as HTML, XML or JSON data.
+This data can be parsed by the browser you are using to create a visual effect, example HTML <p> creating a paragraph on the screen.
+This is known rendering.
+
+React's main goal is to render HTML in a webpage. It does this using a function called ReactDOM.render().
+
+The Render function:
+ReactDOM.render() function takes two arguments: the HTML Code and an HTML Element. The purpose of the function is to then display the HTML code inside the HTML element.
+
+Example:
+In index.html we have a <div> element with an id of root.
+
+Using the ReactDOM.render() function in index.js we can pass two parameters/arguments:
+- HTML Code in the form of a <p> paragraph element
+- HTML Element in the form of a getElementById() call to the <div> element in index.html.
+
+index.html:
+<body>
+
+  <div id="root"></div>
+
+</body>
+
+index.js: 
+ReactDOM.render(<p>Hello</p>, document.getElementById('root'));
+
+*********************
+
+The HTML Code:
+Notice how in the index.js we have HTML Code but it is not surrounded by inverted commas etc.
+This is because technically we are coding in what is known as JSX, which is very similar to HTML.
+
+JSX allows us to write HTML tags inside JavaScript code.
+
+In the following example, we are going to write JSX, i.e. HTML Code, and assign it to a const variable called myElement in index.js:
+
+const myElement = (
+    <table>
+      <tr>
+        <th>Name</th>
+      </tr>
+      <tr>
+        <td>Alan</td>
+      </tr>
+      <tr>
+        <td>Niall</td>
+      </tr>
+    </table>
+  );
+
+Also, in index.js, we call the ReactDOM.render() function to pass our JSX code as HTML Code and also look/match it with a <div> element in index.html called 'rootTableDiv'.
+
+ReactDOM.render(myElement, document.getElementById('rootTableDiv'));
+
+******************
+
+The Root Node:
+The root node is the HTML element (i.e. the 2nd parameter in our call to ReactDOM.render();) where we want to display our result.
+
+Best view it like a container for content managed by React.
+
+You can have as many as you like.
+
+It does not have to be a <div> element.
+
+It does not have to have an id of 'root'.
+
+
+The following is an example of this: we a root node in index.HTML of type <header> with an id of 'title'. Then in index.JS we have a ReactDOM.render(); function call where we pass:
+- HTML Code of a <p> element with the text Welcome.
+- HTML Element of the root node linked by it's id of 'title'.
+
+index.html:
+<header id="title"></header>
+
+index.js:
+ReactDOM.render(<p>Welcome</p>, document.getElementById('title'));
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,77 @@
+Introduction to NodeJS:
+
+What is NodeJS:
+- NodeJS is an open source server environment.
+- It is free.
+- It can run on various platforms, such as Linux, Unix and Windows.
+- NodeJS uses JavaScript on the server.
+
+Why Node.js:
+NodeJS is popular because it uses Asynchronous programming. For example, a common task for a web server can be to open a file on a server and return the content to the user. The following examples compare how PHP does this and NodeJS.
+
+PHP:
+- Sends a task to the computer's file system.
+- Waits while the file system opens and reads the file.
+- Returns the content to the client.
+- Ready to handle the next request.
+
+NodeJS:
+- Sends a task to the computer's file system.
+- Ready to handle the next request.
+- When the file system has opened and read the file, the server returns the content to the client.
+
+NodeJS is much faster, eliminating the waiting time and simply continues with the next request.
+NodeJS runs single-threaded, non-blocking, asynchronous programming which is very memory efficient.
+
+
+Tasks that NodeJS can do:
+- Generate dynamic page content.
+- Create, open, read, write, delete and close files on the server.
+- Collect form data.
+- Add, delete, modify data in your database.
+
+What is a NodeJS file:
+- A NodeJS file contains tasks that will be executed on certain events.
+- A typical event can be someone trying to access a port on a server.
+- Node.js files must be initiated on the server before having any effect.
+- They have the extension, .js.
+
+
+Creating your first Node.js file:
+Step 1: Download and install nodejs from the nodejs website: https://nodejs.org
+
+Step 2:
+Create a directory to store your files and create a file called 'myfirst.js'.
+
+Insert the following code into this file:
+
+var http = require('http);
+
+http.createServer(function(req, res) {
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.end('Hello World');
+}).listen(8080);
+
+
+This code tells the computer to print 'Hello World' anytime a person try's to access the computer on port 8080 through a web browser.
+
+Step 3:
+NodeJS files must be initiated on the Command Line Interface (CLI). This is the terminal in Macs. 
+From here, navigate to the location of the nodeJS file and run the following command:
+
+node myfirst.js
+
+This will basically allow your computer to work as a server. If anyone try's to access your computer on port 8080, they will receive the message 'Hello World'.
+
+In a browser, go to http://localhost:8080
+
+To close the server, type the command: Ctrl ^C
+
+ 
+
+
+
+
+
+
+
