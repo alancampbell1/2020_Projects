@@ -1,0 +1,96 @@
+Select From:
+
+Select all records from the customers table:
+
+The following example selects all data from a table in MySQL using the 'SELECT' statement:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	con.query("SELECT * FROM customers", function(err, result, fields) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+***********************************************
+
+Selecting specific Columns:
+
+To select only specific columns in the table we specify what we want in the SELECT statement as follows:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	con.query("SELECT name, address FROM customers", function(err, result, fields) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+In this example, only the name column and the address column are returned.
+
+***********************************************
+
+The Result Object:
+
+As can be seen by the result returned to the user, we get a result object of type array containing each row as an object.
+
+To get a specific row based on its placement in the table we can use the following example:
+
+console.log(result[2].address);
+
+***********************************************
+
+The fields Object:
+
+The third parameter of the callback function 'fields' is an array containing information about each field in the result. This gives technical information regarding its type and origin.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	con.query("SELECT name, address FROM customers", function(err, result, fields) {
+
+		if(err) throw err;
+		console.log(fields);
+	});
+});
+
+You can use this object to return specific information regarding the table. Such as the name:
+
+console.log(fields[1].name);
+
+
+***********************************************

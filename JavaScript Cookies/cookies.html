@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="cookieLogic.js">
+        </script>
+        <title>
+            Cookies
+        </title>
+    </head>
+    <body>
+
+    </body>
+    <script>
+        /** name=Alan, value="28", cookie will remain for "30" days **/            
+        setCookie("Alan", "28", "30");
+        /** Looking for a Cookie with a name value of 'Alan' **/
+        var myCookie = getCookie("Alan");
+        
+        console.log('Found Cookie: ' + myCookie);
+    </script>
+</html>

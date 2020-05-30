@@ -1,0 +1,30 @@
+NodeJS MySQL Update:
+
+You can update existing records in a table by using the UPDATE statement:
+
+The following example updates cell value 'Carbury' in the address column to 'Maynooth'.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var sql = "UPDATE customers SET address = 'Maynooth' WHERE address = 'Carbury'";
+	con.query(sql, function(err, result){
+	
+		if(err) throw err;
+		console.log(result.affectedRows + " records(s) updated");
+	});
+});
+
+NOTE: Failure to include a WHERE clause will result in a records in the address column being updated.
+
+*****************************************************

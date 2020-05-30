@@ -1,0 +1,57 @@
+NodeJS MySQL Order By:
+
+Sort the Result:
+
+We use ORDER BY to sort a result in ascending or descending order.
+
+The ORDER BY keyword sorts the result ascending by default. If you want to sort a result in descending order, we use the DESC keyword.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	con.query("SELECT * FROM customers ORDER BY name", function (err, result) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+******************************************
+
+Order By Desc:
+
+Include the keyword DESC to reverse the sort and do it in descending order:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	con.query("SELECT * FROM customers ORDER BY name DESC", function (err, result) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+
+******************************************
+

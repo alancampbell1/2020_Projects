@@ -1,0 +1,125 @@
+Introduction to cURL:
+
+cURL is a tool for transferring data to and from a server. It can also make various types of requests. Its great for testing REST APIs and downloading files.
+
+cURL can be viewed as an alternative to POSTMAN and can support most protocols.
+
+In the following examples, HTTP protocol will be used.
+
+Most linux OS's have cURL installed automatically.
+
+To see if you have cURL installed on your PC, open the terminal and go: curl --help
+
+This should return a list of commands you can use.
+
+
+************************************
+
+For the purpose of this tutorial the following website will be used:
+http://jsonplaceholder.typicode.com/
+
+It is a fake online REST API that be used for testing and prototyping.
+
+This website contains a number of resources to work with including: 
+/posts
+/comments
+/albums
+/photos
+/todos
+/users
+
+Adding this extension to the existing URL will return a list of JSON data.
+
+Adding an additional /2 will return the JSON data relating to user:2
+
+You can carry out GET,POST,PUT,PATCH & DELETE requests. Nothing actually will be updated but you will get a response depending on how correct your request is.
+
+
+************************************************
+
+curl http://jsonplaceholder.typicode.com/posts
+This returns all 100 JSON records from the posts resource.
+
+curl http://jsonplaceholder.typicode.com/posts/3
+Returns the response with an ID of 3.
+
+curl -i http://jsonplaceholder.typicode.com/posts/3
+Returns all header information with the response relating to 3.
+
+curl -I http://jsonplaceholder.typicode.com/posts/3
+Returns just the header information.
+
+curl -o test.txt http://jsonplaceholder.typicode.com/posts/3
+Looks for a file in the current working directory called test.txt and saves all the post information to it.
+
+cat test.txt
+Opens this test file in the terminal.
+
+curl -O test.txt http://jsonplaceholder.typicode.com/posts
+Downloads all the JSON data to a file called 'posts' with no extension.
+
+cat posts
+Opens the posts file in the terminal.
+
+
+curl -O http://i.imgur.com/QRlAgOb.png 
+Downloads an Image to the current working directory
+
+curl -O --limit-rate 1000B http://i.imgur.com/QRlAgOb.png 
+Downloads an Image to the Current working directory but limits the byte size.
+
+**************
+
+curl --data "title=Hello&body=Hello World" http://jsonplaceholder.typicode.com/posts
+Post data to the server and returns the following:
+
+{
+  "title": "Hello",
+  "body": "Hello World",
+  "id": 101
+}%
+
+So we added a new record to the 100 already existing.
+
+**************
+
+curl -X PUT -d "title=Hello" http://jsonplaceholder.typicode.com/posts/3
+You can make a PUT request/update on a specific JSON record using the following example.
+
+**************
+
+curl -X DELETE http://jsonplaceholder.typicode.com/posts/3
+Delete request.
+
+**************
+
+If you needed to include authentication, such as username/password, you would include the following:
+
+curl -u username:password ...
+
+*************
+
+If you have a URL that has moved you can include a -L flag to follow this redirection.
+
+curl http://google.com
+
+The above returns a '301 Moved' as the website does not exist at this link. If we follow this specific link in a URL, then an additional WWW will be included to go to www.google.com.
+
+For curl to go to follow the new correct URL, add a -L flag:
+
+curl -L http://google.com
+
+
+*************
+
+FTP Protocol:
+
+How to upload a file using cURL and the FTP Protocol:
+curl -u username:password -T hello.txt ftp://ftp.website.com
+
+How to download a file using cURL and the FTP Protocol:
+curl -u username:password -O ftp://ftp.website.com/hello.txt
+
+
+
+

@@ -1,0 +1,147 @@
+Node.js MySQL Where:
+
+Select with a filter:
+
+WHERE clause is used as a filter when selecting records. The following example demonstrates this:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err){
+	if(err) throw err;
+	con.query("SELECT * FROM customers WHERE address = 'Naas'", function(err, result){
+
+		if(err) throw err;
+		console.log(result);		
+
+	});
+});
+
+
+*******************************************
+
+Wildcard Characters:
+
+Also known as regular expressions, a common character is %. 'S%' means return all records in a particular column where the first letter is 'S'. The following example demonstrates this:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err){
+	if(err) throw err;
+	con.query("SELECT * FROM customers WHERE name = 'S%'", function(err, result){
+
+		if(err) throw err;
+		console.log(result);		
+
+	});
+});
+
+
+*******************************************
+
+Escaping Query Values:
+
+When query values are variables provided by the user, you should escape the values to avoid SQL injections, a common web hacking technique.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var adr = 'Celbridge';
+	var sql = 'SELECT * FROM customers WHERE address = ' + mysql.escape(adr);
+
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log(result);
+
+	});
+});
+
+*******************************************
+
+
+You can also use a ? as a placeholder for values you want to escape. In the following example, the variable is sent as the 2nd parameter in the query() method.
+
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var adr = 'Celbridge';
+	var sql = 'SELECT * FROM customers WHERE address = ?';
+
+	con.query(sql, [adr], function(err, result) {
+
+		if(err) throw err;
+		console.log(result);
+
+	});
+});
+
+We pass an array in to con.query() as the second parameter as shown above.
+
+
+*******************************************
+
+
+When we have multiple placeholders, we add them to the array parameter passed to con.query() in the same order the ? appear.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var adr = 'Celbridge';
+	var name = 'Alan';
+	var sql = 'SELECT * FROM customers WHERE address = ? OR name = ?';
+
+	con.query(sql, [adr, name], function(err, result) {
+
+		if(err) throw err;
+		console.log(result);
+
+	});
+});
+
+
+
+
+
+

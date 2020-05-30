@@ -1,0 +1,53 @@
+Drop Table
+
+You can delete a table from a Database using the following sample code:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var sql = "DROP TABLE customers";
+	con.query(sql, function(err, result) {
+		if(err) throw err;
+		console.log("Table deleted");
+	});
+});
+
+
+************************************************
+
+Drop Only If Exist:
+
+The keywords IF EXISTS only deletes a table if it exists and avoids the return of an error statement if the table does not exist.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var sql = "DROP TABLE IF EXISTS customers";
+	con.query(sql, function(err, result) {
+		if(err) throw err;
+		console.log("Table deleted");
+	});
+});
+
+
+

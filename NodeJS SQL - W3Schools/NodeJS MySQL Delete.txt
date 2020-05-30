@@ -1,0 +1,33 @@
+NodeJS MySQL Delete:
+
+You can delete records from an existing table using the "DELETE FROM" statement. In the following example, a specific row is deleted from the table that matches a certain criteria.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+
+	if(err) throw err;
+	var sql = "DELETE FROM customers WHERE address = 'Highway 37'";
+	con.query(sql, function (err, result) {
+
+		if(err) throw err;
+		console.log("Number of records deleted: " + result.affectedRows);
+
+	});
+
+});
+
+
+NOTE: Failure to include the WHERE clause can cause all records to be deleted.
+Also, the result object contains some interesting information regarding the table that can be printed to the screen such as the number of affected rows:
+
+console.log("Number of records deleted: " + result.affectedRows);
+

@@ -1,0 +1,117 @@
+Insert Into:
+
+Insert into a Table:
+
+To fill a table in MySQL, we use the "INSERT INTO" statement.
+
+The following example inserts a single record into the 'customers' table with two varchar values:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err){
+
+	if(err) throw err;
+	console.log("Connected");
+	var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
+	con.query(sql, function (err, result){
+
+		if(err) throw err;
+		console.log("1 record inserted");
+	});
+});
+
+************************************************
+
+Insert Multiple Records:
+
+To insert multiple records we replace where we mentioned the first record with a ? And create a second variable called values that will hold all these values as shown below:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err){
+
+	if(err) throw err;
+	console.log("Connected");
+	var sql = "INSERT INTO customers (name, address) VALUES ?";
+	var values = [
+		['Alan', 'Celbridge'],
+		['Stephen', 'Naas'],
+		['Sean', 'Carbury'],
+		['Conor', 'Donegal'],
+		['Paul', 'Clane']
+	];
+	con.query(sql, [values], function (err, result){
+
+		if(err) throw err;
+		console.log("Number of rows affected: " + result.affectedRows);
+	});
+});
+
+NOTE: the .query function now takes an extra parameter of our values variable containing the records we want inserted.
+
+************************************************
+
+The Result Object:
+
+When you execute a query, a result object is returned to the user. This contains information such as how the query affected the table. The following example shows what some of this data looks like:
+
+{
+	fieldCount: 0,
+	affectedRows: 14,
+	insertId: 0;
+	serverStatus: 2,
+	warningCount: 0,
+	message: '\'Records:14, Duplicated: 0 Warning: 0',
+	protocol41: true,
+	changedRows: 0
+}
+
+To return their values go: console.log(result.affectedRows);
+
+************************************************
+
+Get Inserted ID:
+
+If you wish to get the ID of an inserted row you can use the result object as shown below:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err){
+
+	if(err) throw err;
+	console.log("Connected");
+	var sql = "INSERT INTO customers (name, address) VALUES ('Michael', 'Blue Village 1')";
+	con.query(sql, function (err, result){
+
+		if(err) throw err;
+		console.log("1 record inserted, ID: " + result.insertId);
+	});
+});
+
+NOTE: You can only get the inserted id when one row is inserted not multiple rows.
+
+************************************************

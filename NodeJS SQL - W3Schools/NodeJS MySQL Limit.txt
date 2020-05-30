@@ -1,0 +1,80 @@
+NodeJS MySQL Limit:
+
+Limit the Result:
+
+You can limit the number of records returned from a query using the 'LIMIT' statement as demonstrated below:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+	if(err) throw err;
+	var sql = "SELECT * FROM customers LIMIT 5";
+	con.query(sql, function(err, result){
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+******************************************
+
+Start from another position:
+
+If you want to limit your selection but start from a specific position we use the keyword OFFSET as demonstrated below:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+	if(err) throw err;
+	var sql = "SELECT * FROM customers LIMIT 2 OFFSET 3";
+	con.query(sql, function(err, result){
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+******************************************
+
+Shorter syntax:
+
+Alternatively, instead of including OFFSET you can use a comma as shown below:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+	if(err) throw err;
+	var sql = "SELECT * FROM customers LIMIT 2, 3";
+	con.query(sql, function(err, result){
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+
+******************************************

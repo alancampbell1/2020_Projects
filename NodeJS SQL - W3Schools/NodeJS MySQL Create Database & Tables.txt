@@ -1,0 +1,118 @@
+Create Database:
+
+To create a database in MySQL we use the CREATE DATABASE statement:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!"
+});
+
+con.connect(function(err){
+	if(err) throw err;
+	console.log("Connected!");
+	con.query("CREATE DATABASE mydb", function (err, result){
+	
+		if(err) throw err;
+		console.log("Database created");
+
+	});
+});
+
+We use the 'con' object and its query method to carry out the CREATE DATABASE statement.
+
+*****************************************************
+
+Create a Table:
+
+Now that a database structure has been created we can populate it with some tables. The following example is very similar to the last example except we are creating a table called 'customers' with two columns: 'name' of type varchar and 'address' of type varchar.
+
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log("Table created");
+
+	});
+});
+
+
+NOTE: in the object creation we specify the name of the database. Also, before we call con.query() we specify our CREATE TABLE statement in variable called sql.
+
+
+*****************************************************
+
+Primary key:
+
+It is good practice to include a column containing a primary key so each record can be uniquely identified. The following code builds on the previous example but includes an additional column at the start called 'id', of type INT and that increments with each new record added.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var sql = "CREATE TABLE customers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))";
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log("Table created");
+
+	});
+});
+
+*****************************************************
+
+Alter an existing table:
+
+If you created a table and forgot to include a PRIMARY KEY definition, you can add one by including the statement ALTER TABLE in the following example:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	var sql = "ALTER TABLE customers ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY";
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log("Table created");
+
+	});
+});
+
+
+
+
+
+
+
+

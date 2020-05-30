@@ -1,0 +1,152 @@
+JavaScript Cookies:
+
+Cookies let you store user information in web pages.
+
+Cookies are data, stored in small text files on the Computer.
+
+When a web server (Google Server) has sent a web page (google.ie) to a browser (chrome), the connection is shut down and the server forgets everything about the user.
+Cookies were invented to solve this problem and to remember information about the user.
+
+Information stored in a cookie includes:
+- When a user visits a webpage, his/her name can be stored in a cookie.
+- Every time that user visits the page, the cookie is used to 'remember' his/her name.
+
+Cookies generally store information in name-value pairs:
+username = Alan Campbell
+
+When a browser requests a web page from a server, cookies belonging to the page are added to the request. This way the server gets the necessary data to 'remember' information about the user.
+
+*******************************
+
+Creating a Cookie in JavaScript:
+
+To carry out most functions with a Cookie we use the document.cookie property. In JavaScript, a cookie can be created like this:
+
+document.cookie = "username=Alan Campbell";
+
+Additionally, you can add an expiry date. By default, the cookie is deleted when the browser is closed:
+
+document.cookie = "username=Alan Campbell; expires=Thu, 24 May 2020 12:00:00 UTC";
+
+By adding a Path parameter, you can tell the browser what path the cookie belongs to. By default, the cookie belongs to the current page.
+
+document.cookie = "username=Alan Campbell; expires=Sun, 18 Dec 2020 12:00:00 UTC; path=/";
+
+*******************************
+
+Reading a Cookie with JavaScript:
+
+If you want to read a cookie value for a particular function in JavaScript you do the following:
+
+var x = document.cookie;
+
+This will return all the cookies in one string, separated with a ;
+
+*******************************
+
+Changing a Cookie with JavaScript:
+
+In JavaScript, you can change a cookie the same way you created it:
+
+document.cookie = "username=Alan James Campbell; expires=Mon, 25 May 2020 12:00:00 UTC; path=/";
+
+*******************************
+
+Deleting a Cookie with JavaScript:
+
+To delete a cookie, simply set the expiry date to sometime that has already happened:
+
+document.cookie = "username=; expires=Mon, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+NOTE: Some browsers will not let you delete a cookie if you don't specify the path.
+
+*******************************
+
+The Cookie String:
+
+The document.cookie property looks like a normal text string. However, it is not. When you set a new cookie, older cookies are not overwritten. The new cookie is added to document.cookie. Concatenated on.
+
+*******************************
+
+A function to set a Cookie:
+
+The following function stores the name of the visitor in a cookie variable:
+
+function setCookie (cname, cvalue, exdays) {
+
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*1000));
+	var expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+- Three parameters are passed in, the name of the cookie, the value of the cookie and number of days until the cookie will expire.
+- A new Date variable is created called d. Using the number of days until the cookie expires parameter, the date is determined and stored in an 'expires' variable.
+- cname, cvalue & expires are concatenated to create the cookie.
+
+*******************************
+
+A function to get a Cookie:
+
+The following function returns the value of a specific cookie:
+
+function getCookie(cname) {
+
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i < ca.length; i++) {
+	
+		var c = ca[i];
+
+		while(c.charAt(0) == ' '){
+
+			c = c.substring(1);
+
+		}
+
+		if(c.indexOf(name) == 0) {
+
+			return c.substring(name.length, c.length);
+		
+		}
+	}
+	
+	return "";
+}
+
+- Take the cookie name we are looking for as a parameter, cname.
+- Create a variable (name) and add on '='.
+- Decode the cookie String, to help handle special characters such as '$'.
+- Split the cookie along ';'found.
+- Loop through the split cookie
+- Remove any trailing white spaces.
+- If the cookie is found (c.indexOf(name) == 0), return the value of the cookie to the user.
+- If no value found, then return blank.
+
+*******************************
+
+A function to Check a Cookie:
+
+The following checks if a cookie is set. If it is set it will display a greeting. If it is not set, it will display a prompt box, asking for the name of the user and stores the user name cookie for 365 days by calling setCookie() function:
+
+function checkCookie(){
+
+	var username = getCookie("username");
+	if(username != "") {
+		
+		alert("Welcome again " + username);
+
+	} else {
+
+		username = prompt("Please enter your name:", "");
+		if(username != "" && username != null) {
+
+			setCookie("username", username, 365);
+
+		}
+	}
+} 
+
+*******************************
+

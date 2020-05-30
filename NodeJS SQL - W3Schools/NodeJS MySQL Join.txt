@@ -1,0 +1,176 @@
+NodeJS MySQL Join:
+
+You can combine rows from two or more tables, based on a related column between using a JOIN statement.
+
+To demonstrate this we need to create two new tables, 'users' & 'products', and insert some basic information.
+
+************************************
+
+Creating the 'users' table and inserting some data:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	
+	var sql = "CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), favourite_product VARCHAR(255))";
+	
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log("Table created");
+
+	});
+
+	sql = "INSERT INTO users (name, favourite_product) VALUES ?";
+	var values = [
+		['John', '154'],
+		['Peter', '154'],
+		['Amy', '155'],
+		['Hannah', ''],
+		['Michael', '']
+	];
+	con.query(sql, [values], function (err, result){
+
+		if(err) throw err;
+		console.log("Number of rows affected: " + result.affectedRows);
+	});	
+});
+
+
+
+
+Creating the 'products' table and inserting some data:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+});
+
+con.connect(function(err) {
+
+	if(err) throw err;
+	
+	var sql = "CREATE TABLE products (id INT, name VARCHAR(255))";
+	
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log("Table created");
+
+	});
+
+	sql = "INSERT INTO products (id, name) VALUES ?";
+	var values = [
+		['154', 'Chocolate Heaven'],
+		['155', 'Tasty Lemons'],
+		['156', 'Vanilla Dreams']
+	];
+	con.query(sql, [values], function (err, result){
+
+		if(err) throw err;
+		console.log("Number of rows affected: " + result.affectedRows);
+	});	
+});
+
+*********************************************
+
+JOIN the two tables:
+
+In the following example the two tables are joined using the users' 'favourite_product' field and the products' 'id' field.
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+
+	if(err) throw err;
+	var sql = "SELECT users.name AS user, products.name AS favourite FROM users JOIN products ON users.favourite_product = products.id";
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+*********************************************
+
+LEFT Join
+
+If you want to return all users no matter if they have a favourite product or not, then use a LEFT JOIN statement:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+
+	if(err) throw err;
+	var sql = "SELECT users.name AS user, products.name AS favourite FROM users LEFT JOIN products ON users.favourite_product = products.id";
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+
+
+
+
+
+*********************************************
+
+Right Join:
+
+If you want to return all products and the users who have them as their favourite, even if no user have them as their favourite, use a RIGHT JOIN as below:
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+
+	host: "localhost",
+	user: "root",
+	password: "Abbeyfarm17!",
+	database: "mydb"
+}); 
+
+con.connect(function(err){
+
+	if(err) throw err;
+	var sql = "SELECT users.name AS user, products.name AS favourite FROM users RIGHT JOIN products ON users.favourite_product = products.id";
+	con.query(sql, function(err, result) {
+
+		if(err) throw err;
+		console.log(result);
+	});
+});
+
+NOTE: Hannah and Michael, who have no favourite product, are not included in the result.
+
+*********************************************
