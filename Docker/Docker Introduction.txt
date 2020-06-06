@@ -1,0 +1,54 @@
+Docker is a container management service.
+
+The 3 keywords of Docker are Develop, Ship & Run. 
+
+The purpose of Docker is to allow Developers to easily develop applications, ship them into containers which can then be deployed anywhere.
+
+To run software services, e.g. Optimum T&A, Apache, MongoDB & MySQL, inside of Containers. These containers are separate from your OS and whole local machine environment.
+
+So instead of trying to build an app on one machine and repeat the process on a second machine, if it's a different OS and has only select features installed, Docker removes the pain of getting them to match up.
+Docker runs the app in the container and this will be the same no matter what OS you use.
+
+Why use Docker:
+- Docker can reduce the size of development by providing a smaller footprint of the OS by using Containers.
+- By using Containers, it is easier for teams across different units, such as Development & QA Teams, to work seamlessly across applications.
+- Docker can be deployed anywhere, on physical or virtual machines or on the cloud.
+- Docker is lightweight so it can easily be scalable.
+- Unlike VMware that creates a new OS/kernel for each VM it creates, Docker uses only the one OS/kernel with lightweight individual containers interacting with it.
+- Very popular with large tech companies.
+
+Components of Docker:
+- Docker for Mac - allows a developer to run Docker Containers on the MacOS.
+- Docker Engine  - Used to build Docker images and create Docker containers.
+- Docker Hub     - A registry used to host various Docker images.
+- Docker Compose - Used to define applications using multiple Docker containers.
+
+****************************************
+
+Getting Started:
+
+Create a DockerHub account and Sign in.
+
+Download Docker for Mac, install it and when running, sign in with your new Dockerhub account. 
+
+
+What is DockerHub:
+
+DockerHub is a registry service on the cloud that allows you to download Docker images that are built by other communities. You can also upload your own Docker images.
+
+
+***************************************
+
+Basic Commands:
+
+In a new terminal, type the following:
+Docker		-	returns list of commands
+Docker version	-	returns info. On Docker engine etc.
+Docker info	-	gives info. Regarding containers etc.	
+
+
+
+
+
+
+

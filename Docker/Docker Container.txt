@@ -1,0 +1,116 @@
+Docker Container:
+
+Creating an Ngin x container.
+
+Ngin X is a web server, very similar to Apache.
+
+Command:
+docker container run -it -p 80:80 nginx
+
+Breakdown of commands:
+- docker container run	-	You want to create a container
+- -it			- 	You want to create it in interactive mode
+- -p			- 	You want to publish it
+- 80:80			-	First port is the port you want to use on your local machine. 2nd port is what is exposed from the container.
+- nginx			-	The name of the image
+
+The program looks for nginx on your local machine. If it cannot find it, it goes to Dockerhub and pulls the image down.
+
+The image is now running. You can see this in the Docker Dashboard that accompanies the Docker download and if you do to localhost:80 you can see the same.
+
+By running the Container in interactive mode, when you go to localhost:80, the terminal is updated with new information in a log format.
+
+To stop a running Container in Docker, in the running terminal go Ctrl^C.
+
+To see all running Containers go: docker container ls
+To see all Containers, both running and not: docker container ls -a
+To delete a Container: docker container rm containerID
+To see all running Containers (alt): docker ps
+
+NOTE: This deleted the Container but the pulled Image from DockerHub still exists on your Machine. So if we create a nginx Container again, it will use this image instead of pulling it down from DockerHub.
+
+To see all Images: docker images
+To delete an Image: docker image rm ImageID
+To pull down an image without creating a Container: docker pull nameOfImage
+
+**********************************************
+
+What is a Docker Image:
+
+An image is a combination of a file system and parameters. 
+
+In Dockerhub, you can search for Images and get an in-depth description of what it does.
+
+You will see a command associated with a Docker Image, e.g. 'docker pull nginx'. This will pull/save the image to your PC but that's it.
+In our example above, we created a nginx Container and the command we used automatically pulled the nginx image down once it realised my local machine did not have it.
+
+
+Dockerfile: A Dockerfile is a simple text file that is used to create an image. Each image you explore in DockerHub has an associated Dockerfile.
+
+
+********************************************
+
+Running a Container in the background:
+
+docker container run -d -p 8080:80 --name mynginx nginx
+The -d means detached to run in the background.
+The --name means you can add a name to the container.
+
+This will not prevent us from using a different terminal but is running in the background.
+docker container ls	-	shows us that the container is running.
+
+Localhost:8080 in a browser will show you the Container is running.
+
+********************************************
+
+Creating an Apache Container:
+docker container run -d -p 8081:80 --name myapache httpd
+
+Localhost:8081 will confirm that it works.
+
+
+********************************************
+
+Environment Variable:
+An environment variable is a variable whose value is set outside the program and passed in to effect how the application acts.
+
+Each Container on DockerHub has a list of environment variables that can be altered when starting up the container to get it to act in a particular way.
+
+An example of this is the mysql container on Docker Hub:
+docker container run -d -p 3306:3306 --name mysql --env MYSQL_ROOT_PASSWORD=123456 mysql
+
+
+********************************************
+
+To stop a Container without deleting it we go:
+docker container stop CONTAINER_ID or CONTAINER_NAME
+
+To delete a Container:
+docker container rm CONTAINER_ID
+
+To delete an Image:
+docker rmi IMAGE_ID
+
+To clean up any resources not associated with a Container:
+docker system prune
+
+To additionally remove any stopped containers and all unused images:
+docker system prune -a   
+
+To remove a running container:
+docker container rm CONTAINER_ID/CONTAINER_NAME -f
+
+
+Remove all Containers:
+docker rm $(docker ps -aq) -f
+
+
+
+
+
+
+
+
+
+
+

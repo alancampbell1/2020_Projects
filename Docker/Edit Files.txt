@@ -1,0 +1,79 @@
+Edit Files:
+
+How to Bash into a Container (nginx example):
+
+docker container exec -it mynginx bash
+
+This will return a root@ from which you know you are in the container:
+ls	-	returns the different folders in the Container
+cd	-	include file path to navigate around Container files
+
+Example: cd /usr/share/nginx/html will display the HTML pages we interact with from localhost:8080.
+
+We could edit the HTML from within here but a better option is to create a 'volume' to map this location to your local machine.
+
+To exit a Container go 'exit'.
+
+*******************************
+
+Navigate to test folder on your machine in the terminal.
+
+Creating a new Container and adding a 'bind mount':
+docker container run -d -p 8080:80 -v $(pwd):/usr/share/nginx/html --name nginx-website nginx
+
+-v maps the two locations together.
+
+If you look in the test directory there is nothing there. 
+
+However, if you add an index.html to this folder it will override the contents in the container.
+
+You can see the contents in the browser at localhost:8080.
+
+Add a second .html page called about go to localhost:8080/about.html and you will see this new page.
+
+******************************
+
+Creating a Dockerfile to create an Image for the 'test' folder application:
+
+Create a Dockerfile with no extension in the Test folder.
+
+Then in the file insert the following:
+
+FROM nginx:latest		//Get the latest version of nginx
+WORKDIR /usr/share/nginx/html
+COPY . .		//This means copy everything in the current directory to the image
+
+
+So now we want to build our image using this Dockerfile and push it to our Dockerhub account:
+
+docker image build -t alancampbell/nginx-website-demo .
+
+The (.) at the end means to push all the files in the current directory to it.
+
+If you go 'docker images', you will see the new image.
+
+So we can now create a Container from this image:
+
+docker container run -d -p 8082:80 alancampbell/nginx-website-demo
+
+Then 'docker ps' to see if it is up and running.
+
+So if we go to localhost:8082 in a browser we will see Hello World and if we go localhost:8082/about.html we will the about page.
+
+To push to DockerHub:
+docker push alancampbell/nginx-website-demo
+
+So now, a user can run the above command anywhere they can connect and this will run my application.
+
+
+
+
+
+
+
+
+
+
+
+
+

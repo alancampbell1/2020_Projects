@@ -1,0 +1,103 @@
+Docker Cheatsheet:
+
+See list of commands:
+docker
+
+Get info. Regarding version of Docker:
+docker version
+
+Get info. Regarding containers:
+docker info
+
+Run a container (Note: if container does not exist it will download it):
+docker container run -it -p 80:80 nameOfContainer
+
+Stop a running container:
+Ctrl ^C
+
+View the running container:
+In a browser, go to localhost:80
+
+View all running containers:
+docker container ls
+docker ps
+
+View all Containers, both running and not running:
+docker container ls -a
+
+Delete a Container:
+docker container rm containerID
+
+Note: When you delete a Container, the image (which creates the container) still exists.
+
+See all images:
+docker images
+
+Delete an image:
+docker image rm ImageID
+
+Pull down an Image from DockerHub but not create the Container:
+docker pull nameOfImage
+
+Run a Container in the background:
+docker container run -d -p 8080:80 --name myContainer nameOfContainer
+
+Note: You can now carry out other tasks in the same terminal and see the running container in a browser at localhost:8080.
+
+Pass an environment variable to a container, e.g. a password:
+docker container run -d -p 3306:3306 --name mysql --env MYSQL_ROOT_PASSWORD=123456 mysql
+
+Note: Look to DockerHub for environment variables concerning each Container.
+
+Stop a Container without deleting it:
+docker container stop ContainerID
+
+Delete a Container:
+docker container rm ContainerID
+
+Clean up resources not associated with a Container:
+docker system prune 
+
+Remove any stopped containers and all unused images:
+docker system prune -a
+
+Remove a running container:
+docker container rm ContainerID -f
+
+Remove all Containers:
+docker rm $(docker ps -aq) -f
+
+How to Bash into a Container:
+docker container exec -it containerName bash
+
+While in the Container:
+ls - returns the different folders
+cd - used to navigate throughout the container
+
+Exit an Container:
+exit
+
+Creating a Container and adding a 'bind mount':
+docker container run -d -p 8080:80 -v $(pwd):/usr/share/nginx/html --name myNginxWebsite nginx
+
+Note: This will match the terminal's current directory to a file path '/usr/share/nginx/html' in the container. Once matched, you can add/edit files from the terminal's directory and this will be reflected in the Container with the results displayed in localhost:8080.
+
+Creating an Image from a Dockerfile:
+docker image build -t alancampbell/nginx-website-demo .
+
+Note: The (.) at the end means push all the files in the current terminal's directory to the image.
+
+View all Images:
+docker images
+
+Creating a Container from an Image that was created from a Dockerfile:
+docker container run -d -p 8082:80 alancampbell/nginx-website-demo
+
+Note: in a browser go to localhost:8082 to see the html files
+
+Push an Image to DockerHub:
+docker push alancampbell/nginx-website-demo
+
+
+
+
