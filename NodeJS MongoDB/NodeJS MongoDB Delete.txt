@@ -1,0 +1,62 @@
+Node.js MongoDB Delete:
+
+Delete Document:
+
+To delete a record/document, we use the deleteOne() method. The first parameter of the deleteOne() method is a query object defining which document to delete.
+
+The following example deletes the record with an 'address' value of 'Mountain 21':
+
+var MongoClient = require('mongodb').MongoClient;
+var url		= "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	var myquery = { address: 'Mountain 21' };
+
+	dbo.collection("customers").deleteOne(myquery, function(err, obj){
+		if(err) throw err;
+		console.log("1 document deleted");
+		db.close();
+	});
+}); 
+
+***************************************
+
+Delete Many:
+
+To delete more than one document we use the deleteMany() method. The first parameter of the deleteMany() method is a query object defining which documents to delete.
+
+The following example uses regular expressions to delete all addresses that start with 'O':
+
+var MongoClient = require('mongodb').MongoClient;
+var url		= "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	var myquery = { address: '/^O/' };
+
+	dbo.collection("customers").deleteMany(myquery, function(err, obj){
+		if(err) throw err;
+		console.log("1 document deleted");
+		db.close();
+	});
+}); 
+
+***************************************
+
+The Result Object:
+
+The deleteMany() method returns an object containing information about how the execution affected the database.
+There is an object inside the object called 'result' that tells if the execution went ok.
+
+console.log(obj.result.n);
+
+
+
+
+
+
+
+

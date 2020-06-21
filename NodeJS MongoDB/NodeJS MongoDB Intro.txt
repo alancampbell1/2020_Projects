@@ -1,0 +1,52 @@
+NodeJS MongoDB:
+
+Create the package.json file with the command 'npm init'.
+
+Install mongodb with the command: npm install mongodb
+
+
+You can include mongodb in your code using the following require statement:
+
+var mongo = require('mongodb');
+
+*************************************************
+
+What is MongoDB:
+
+MongoDB is a document orientated NoSQL Database used for high volume data storage. Instead of using tables and rows, MongoDB makes use of collections and documents. 
+Documents consist of key-value pairs which are the basic unit of data in MongoDB.
+Collections contain sets of documents and functions which is the equivalent of relational databases. 
+
+Key features:
+- Each Database contains collections which in turn contains documents. Each document can be different with a varying number of fields.
+- The document structure is more in line with how developers construct their classes and objects in their respective languages.
+- The rows (or documents in MongoDB) doesn't need to have a schema defined beforehand. Instead, fields can be created on the fly.
+- Documents are similar to JavaScript objects or JSON objects. It's very scalable, fast and flexible.
+- You don't have to map out your entire data structure unlike with relational databases that need all the tables and columns defined before you put data into them.
+
+
+To install MongoDB you need to do the following:
+
+Install HomeBrew:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+Install MongoDB:
+brew tap mongodb/brew
+
+brew install mongodb-community@4.2
+
+brew services start mongodb-community@4.2
+
+To check that MongoDB installed:
+ps aux | grep -v grep | grep mongod
+
+Connect to MongoDB Shell:
+mongo
+
+Disconnect to MongoDB Shell:
+Ctrl^C
+
+Install MongoDB module to use within NodeJS:
+npm install mongodb
+
+

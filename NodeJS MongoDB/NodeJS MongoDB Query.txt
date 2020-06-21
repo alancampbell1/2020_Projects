@@ -1,0 +1,42 @@
+Filter the result:
+
+To filter results we use the query object which is passed as the first argument in the find() method.
+
+In the following example, we store our query in a query variable and pass it into find().
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var query = { address: "Park Lane 38" };
+  dbo.collection("customers").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});
+
+********************************************
+
+Filter with Regular Expressions:
+
+You can also use regular expressions to find what you are looking for. Note: these can only be used to query strings.
+
+The following example, returns all the documents where the 'address' field starts with the letter "S".
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var query = { address: /^S/ };
+  dbo.collection("customers").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});
+

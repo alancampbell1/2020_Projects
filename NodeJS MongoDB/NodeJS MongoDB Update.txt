@@ -1,0 +1,61 @@
+Node.js MongoDB Update:
+
+Updating a Document/record:
+
+You can update a record/document using the updateOne() method. 
+
+This method's first parameter is a query object defining which document to update.
+The second parameter is an object defining the new values of the document.
+
+In the following example, we want to find the document with the 'address' value of 'Valley 345' and update it's name value to 'Mickey' and 'address' value to 'Canyon 123'.
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	var myquery = { address: "Valley 345" };
+	var newvalues = { $set: {name: "Mickey", address: "Canyon 123"}};
+	dbo.collection("customers").updateOne(myquery, newvalues, function (err, res){
+		if(err) throw err;
+		console.log("1 document update");
+		db.close();
+	}); 
+});
+
+
+*********************************************
+
+Update Many Documents:
+
+This method will update all documents that meet the criteria of the query:
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://127.0.0.1:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myquery = { address: /^S/ };
+  var newvalues = {$set: {name: "Minnie"} };
+  dbo.collection("customers").updateMany(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(res.result.nModified + " document(s) updated");
+    db.close();
+  });
+});
+
+*********************************************
+
+The Result Object:
+
+Both updateOne() and updateMany() methods return an object which contains information about the execution effected the database.
+
+There is an object within the returned object called 'result' that tells how the execution went using the nModified value:
+
+
+console.log(res.result.nModified);
+
+
+

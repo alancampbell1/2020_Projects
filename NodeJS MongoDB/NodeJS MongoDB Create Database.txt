@@ -1,0 +1,18 @@
+NodeJS MongoDB Create Database:
+
+To create a database in MongoDB, start by creating a MongoClient object, then specify a connection URL with the correct IP address and name of the database you want to create.
+MongoDB will then create the Database if it does not exist and make a connection.
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongod://localhost:27017/mydb";
+
+MongoClient.connect(url, function(err, db){
+	if(err) throw err;
+	console.log("Database created");
+	db.close();
+});
+
+To run a nodeJS program with mongoDB go:
+node demo_create_mongo_db.js
+
+NOTE: In MongoDB, a database is not created until it gets content.

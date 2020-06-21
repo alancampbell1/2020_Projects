@@ -1,0 +1,81 @@
+NodeJS MongoDB Insert:
+
+To insert a record, or a document, into a collection, the insertOne() method is used.
+
+Note: In MongoDB, a document is the same as a record in MySQL.
+
+In the following example, an object is created called 'myobj' that has two key value pairs. A 'name' key with the value 'Company Inc' and an 'address' key with the value 'Highway 37'.
+
+The insertOne() method is called on the collection 'mydb' and 'myobj' is passed.
+
+If an error is encountered, this is returned else the statement '1 document inserted' and the db is closed.
+
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myobj = { name: "Company Inc", address: "Highway 37" };
+  dbo.collection("customers").insertOne(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("1 document inserted");
+    db.close();
+  });
+});
+
+*************************************************
+
+To insert multiple documents at once, you simply expand the object 'myobj'.
+
+  var myobj = [
+    { name: 'John', address: 'Highway 71'},
+    { name: 'Peter', address: 'Lowstreet 4'},
+    { name: 'Amy', address: 'Apple st 652'},
+    { name: 'Hannah', address: 'Mountain 21'},
+    { name: 'Michael', address: 'Valley 345'},
+    { name: 'Sandy', address: 'Ocean blvd 2'},
+    { name: 'Betty', address: 'Green Grass 1'},
+    { name: 'Richard', address: 'Sky st 331'},
+    { name: 'Susan', address: 'One way 98'},
+    { name: 'Vicky', address: 'Yellow Garden 2'},
+    { name: 'Ben', address: 'Park Lane 38'},
+    { name: 'William', address: 'Central st 954'},
+    { name: 'Chuck', address: 'Main Road 989'},
+    { name: 'Viola', address: 'Sideway 1633'}
+  ];
+
+Then instead of insertOne() method, we use the insertMany() method.
+
+When executing insertMany(), a result object is returned. This contains information about how the insertion has affected the DB.
+
+For example, 'res.insertCount' can be called to return the number of records inserted.
+
+
+*************************************************
+
+When creating a document, if you do not specify an _id field, then MongoDB will add one for you. Otherwise, you can add them yourself in the object declaration but each value must be unique.
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  var myobj = [
+    { _id: 154, name: 'Chocolate Heaven'},
+    { _id: 155, name: 'Tasty Lemon'},
+    { _id: 156, name: 'Vanilla Dream'}
+  ];
+  dbo.collection("products").insertMany(myobj, function(err, res) {
+    if (err) throw err;
+    console.log(res);
+    db.close();
+  });
+});
+
+
+Note: If you just print out the object 'res', you get all the information regarding the Collection you are working with.
+

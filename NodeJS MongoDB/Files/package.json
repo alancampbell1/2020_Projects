@@ -1,0 +1,15 @@
+{
+  "name": "mongodb_practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CreateDB.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Campbell",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.18"
+  }
+}

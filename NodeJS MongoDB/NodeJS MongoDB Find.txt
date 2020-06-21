@@ -1,0 +1,86 @@
+In MongoDB we use 'find' and 'findOne' methods to find data in a collection. This is similar to a SELECT statement in MySQL.
+
+FindOne:
+The findOne() method returns the first occurrence in a selection.
+
+We pass a query object as a first parameter to findOne().
+
+In the following example, we use an empty query object, which selects all documents in a collection but it only returns the first document.
+
+Remember, a 'document' in mongoDB is like a record.
+
+var MongoClient = require('mongdb').MongoClient;
+var url 	= "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db){
+
+	if(err) throw err;
+	var dbo = db.db("mydb");
+	dbo.collection("customers").findOne({}, function(err, result){
+
+		if(err) throw err;
+		console.log(result.name);
+		db.close();
+
+	});
+});
+
+********************************************
+
+Find All:
+
+To select data from a table in MongoDB, you can use the find() method.
+
+find() returns all occurrences in a selection.
+
+The first parameter of the find() method is a query object. If you send an empty query object, it is the same as selecting all the documents in the collection, like SELECT * MySQL.
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  dbo.collection("customers").find({}).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});
+
+
+*********************************************************
+
+Find Some:
+
+The second parameter of the find() method is the projection object that describes which fields to include in the result.
+This is optional and if not included will return all fields in the result.
+
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("mydb");
+  //Exclude the _id field from the result:
+  dbo.collection("customers").find({}, { projection: { _id: 0, name: 1, address: 1 } }).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+});
+
+The result will not have the id included in the documents returned. Just name and address.
+
+*********************************************************
+
+The result object:
+The result can be converted into an array containing each document as an object. 
+
+If you are concerned with a specific record/row number. Do the following:
+
+console.log(result[2].address);
+
+
+
